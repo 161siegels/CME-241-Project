@@ -1,9 +1,9 @@
 FEATURES = [
-    "Interval",
+    "Interval","CumulativePlayerPointsInterval", 
     "Player", "GameId", "Date", "Team", "Opponent", "Home",
     "TeamRest", "OpponentTeamRest",
     "CumulativeTeamPointsInterval", "CumulativeOpponentPointsInterval",
-     "CumulativePlayerPointsInterval", "ScoreMarginInterval",
+     "ScoreMarginInterval",
     "ScoreMarginxTimeRemainingInterval", "ScoreMarginxTimeRemaining2Interval",
     "RollingAvgPlayerPoints", "RollingAverageOpposingTeamAllowedPoints", "RollingAverageTeamPoints"
 ]
