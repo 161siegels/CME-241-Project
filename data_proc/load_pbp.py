@@ -124,7 +124,7 @@ def interval_metric(df: pd.DataFrame, intervals: int, statistic: str):
 
 def stack_intervals(df: pd.DataFrame, intervals: int, statistic: str):
     df_list = []
-    for interval in range(2):
+    for interval in range(intervals):
         interval_cols = [c for c in df.columns if f"{statistic}_" in c]
         # only include columns from this interval and the other feature columns
         interval_cols_other = [c for c in interval_cols if f"{statistic}_{interval}" not in c]
@@ -135,8 +135,8 @@ def stack_intervals(df: pd.DataFrame, intervals: int, statistic: str):
         time_remaining = 48*60 - ((48/intervals) * (interval+1) * 60)
         time_remaining = 0 if (interval == (intervals-1)) else time_remaining
         temp_df['ScoreMarginInterval'] = temp_df['CumulativeTeamPointsInterval'] - temp_df['CumulativeOpponentPointsInterval']
-        temp_df['ScoreMarginxTimeRemainingInterval'] = temp_df['ScoreMarginInterval'] * time_remaining
-        temp_df['ScoreMarginxTimeRemaining2Interval'] = temp_df['ScoreMarginInterval'] * time_remaining**2
+        temp_df['ScoreMarginxTimeRemainingInterval'] = abs(temp_df['ScoreMarginInterval']) * time_remaining
+        temp_df['ScoreMarginxTimeRemaining2Interval'] = abs(temp_df['ScoreMarginInterval']) * time_remaining**2
         df_list.append(temp_df)
     # create synthetic for start of game
     start_df = temp_df.copy()
@@ -150,7 +150,7 @@ def stack_intervals(df: pd.DataFrame, intervals: int, statistic: str):
     return df
 
 if __name__ == "__main__":
-    intervals = 2
+    intervals = 4
     statistic = "Points"
     df = data_proc()
     df = player_game_scoring(df, intervals=intervals)
