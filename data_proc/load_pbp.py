@@ -134,6 +134,7 @@ def stack_intervals(df: pd.DataFrame, intervals: int, statistic: str):
         temp_df["Interval"] = interval + 1
         time_remaining = 48*60 - ((48/intervals) * (interval+1) * 60)
         time_remaining = 0 if (interval == (intervals-1)) else time_remaining
+        time_remaining = time_remaining/60
         temp_df['ScoreMarginInterval'] = temp_df['CumulativeTeamPointsInterval'] - temp_df['CumulativeOpponentPointsInterval']
         temp_df['ScoreMarginxTimeRemainingInterval'] = abs(temp_df['ScoreMarginInterval']) * time_remaining
         temp_df['ScoreMarginxTimeRemaining2Interval'] = abs(temp_df['ScoreMarginInterval']) * time_remaining**2
@@ -142,9 +143,9 @@ def stack_intervals(df: pd.DataFrame, intervals: int, statistic: str):
     start_df = temp_df.copy()
     start_df[this_interval_cols] = 0
     start_df["Interval"] = 0
-    start_df['ScoreMargin'] = 0
-    start_df['ScoreMarginxTimeRemaining'] = 0
-    start_df['ScoreMarginxTimeRemaining2'] = 0
+    start_df['ScoreMarginInterval'] = 0
+    start_df['ScoreMarginxTimeRemainingInterval'] = 0
+    start_df['ScoreMarginxTimeRemaining2Interval'] = 0
     start_df[[c for c in start_df.columns if 'Cumulative' in c]] = 0
     df = pd.concat(df_list + [start_df], axis=0)
     return df
